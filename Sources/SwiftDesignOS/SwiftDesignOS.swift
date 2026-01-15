@@ -1,71 +1,98 @@
 //
-//  SwiftDesignOS.h
+//  SwiftDesignOS.swift
 //  Swift DesignOS
 //
 //  Public API for the Swift DesignOS library
+//
 
 import Foundation
 
-@_exported import struct ProductOverview
-@_exported import struct Problem
-@_exported import struct Section
-@_exported import struct ProductRoadmap
-@_exported import struct Entity
-@_exported import struct DataModel
-@_exported import struct ColorTokens
-@_exported import struct TypographyTokens
-@_exported import struct DesignSystem
-@_exported import struct ShellSpec
-@_exported import struct ShellInfo
-@_exported import struct ProductData
-@_exported import struct ParsedSpec
-@_exported import struct ScreenDesignInfo
-@_exported import struct ScreenshotInfo
-@_exported import struct SectionData
-
-// MARK: - Product Loading
-
-/// Loads all product data from markdown and JSON files
 public func loadProductData() -> ProductData {
-    // TODO: Implement markdown and JSON file loading
+    let overview: ProductOverview?
+    let roadmap: ProductRoadmap?
+
+    if ProductLoader.hasProductOverview() {
+        do {
+            overview = try ProductLoader.loadProductOverview()
+        } catch {
+            overview = nil
+        }
+    } else {
+        overview = nil
+    }
+
+    if ProductLoader.hasProductRoadmap() {
+        do {
+            roadmap = try ProductLoader.loadProductRoadmap()
+        } catch {
+            roadmap = nil
+        }
+    } else {
+        roadmap = nil
+    }
+
+    let dataModel: DataModel?
+    if DataModelLoader.hasDataModel() {
+        do {
+            dataModel = try DataModelLoader.loadDataModel()
+        } catch {
+            dataModel = nil
+        }
+    } else {
+        dataModel = nil
+    }
+
+    let designSystem: DesignSystem?
+    if DesignSystemLoader.hasDesignSystem() {
+        do {
+            designSystem = try DesignSystemLoader.loadDesignSystem()
+        } catch {
+            designSystem = nil
+        }
+    } else {
+        designSystem = nil
+    }
+
+    let shell: ShellInfo?
+    do {
+        shell = try ShellLoader.loadShellInfo()
+    } catch {
+        shell = nil
+    }
+
     return ProductData(
-        overview: nil,
-        roadmap: nil,
-        dataModel: nil,
-        designSystem: nil,
-        shell: nil
+        overview: overview,
+        roadmap: roadmap,
+        dataModel: dataModel,
+        designSystem: designSystem,
+        shell: shell
     )
 }
 
-/// Checks if product overview exists
 public func hasProductOverview() -> Bool {
-    // TODO: Implement file checking
-    return false
+    ProductLoader.hasProductOverview()
 }
 
-/// Checks if product roadmap exists
 public func hasProductRoadmap() -> Bool {
-    // TODO: Implement file checking
-    return false
+    ProductLoader.hasProductRoadmap()
 }
 
-// MARK: - Section Loading
+public func hasDataModel() -> Bool {
+    DataModelLoader.hasDataModel()
+}
 
-/// Loads data for a specific section
+public func hasDesignSystem() -> Bool {
+    DesignSystemLoader.hasDesignSystem()
+}
+
+public func hasShellSpec() -> Bool {
+    ShellLoader.hasShellSpec()
+}
+
 public func loadSectionData(sectionId: String) -> SectionData {
-    // TODO: Implement section data loading
-    return SectionData(
-        sectionId: sectionId,
-        spec: nil,
-        specParsed: nil,
-        data: nil,
-        screenDesigns: [],
-        screenshots: []
-    )
+    SectionLoader.loadSectionData(sectionId: sectionId)
 }
 
-/// Gets all section IDs
 public func getAllSectionIds() -> [String] {
-    // TODO: Implement section discovery
-    return []
+    SectionLoader.getAllSectionIds()
 }

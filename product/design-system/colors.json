@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "_comment": "TaskFlow Design System - Color Tokens",
+  "_description": "This file defines the color palette for TaskFlow. Colors are organized by semantic purpose (primary, secondary, neutral, semantic). All colors should support both light and dark modes through the use of dynamic system colors or explicit light/dark variants.",
+  "_swiftUsage": "In SwiftUI, use Color(hex: string) extension or create color assets in Assets.xcassets. For dynamic appearance, prefer SF Symbols colors or system colors: Color.primary, Color.secondary, etc.",
+  "_colorFormat": "Hex colors in #RRGGBB or #RRGGBBAA format. For system colors, use semantic names (e.g., 'systemBlue') to get automatic dark mode support.",
+  
+  "primary": {
+    "_comment": "Primary brand color used for main actions, active states, and brand identity. TaskFlow uses a calming blue that feels productive and trustworthy.",
+    "default": "#007AFF",
+    "light": "#0056CC",
+    "dark": "#409CFF",
+    "_notes": "Matches iOS system blue for native feel. Use for primary buttons, active tabs, and selection indicators."
+  },
+  
+  "secondary": {
+    "_comment": "Secondary brand color used for complementary actions, accents, and highlights. This color should work well with primary without clashing.",
+    "default": "#5856D6",
+    "light": "#423DB0",
+    "dark": "#8585E8",
+    "_notes": "iOS purple. Use for secondary buttons, badges, and decorative elements that need to stand out without competing with primary."
+  },
+  
+  "neutral": {
+    "_comment": "Neutral colors for backgrounds, text, borders, and structural elements. These should be subtle and not draw attention.",
+    "background": {
+      "_comment": "Background colors for different hierarchy levels",
+      "level1": "#FFFFFF",
+      "level2": "#F2F2F7",
+      "level3": "#E5E5EA",
+      "_notes": "Level 1: Main app background. Level 2: Secondary cards/sections. Level 3: Tertiary grouping. In dark mode, these map to #000000, #1C1C1E, #2C2C2E."
+    },
+    "text": {
+      "_comment": "Text colors with semantic meaning",
+      "primary": "#000000",
+      "secondary": "#3C3C43",
+      "tertiary": "#8E8E93",
+      "_notes": "Primary: Main text, headings. Secondary: Subheadings, body text. Tertiary: Captions, placeholders, disabled text. In dark mode: #FFFFFF, #EBEBF5, #98989D."
+    },
+    "border": {
+      "_comment": "Colors for dividers, separators, and outlines",
+      "default": "#C6C6C8",
+      "light": "#E5E5EA",
+      "dark": "#38383A",
+      "_notes": "Use for list separators, card borders, and input field outlines. Adjust opacity for subtle vs prominent borders."
+    }
+  },
+  
+  "semantic": {
+    "_comment": "Semantic colors for status, feedback, and system actions. These should match Apple's Human Interface Guidelines for consistency.",
+    "success": {
+      "_comment": "Indicates successful completion, completion states, and positive feedback",
+      "default": "#34C759",
+      "light": "#248A3D",
+      "dark": "#32D74B",
+      "_notes": "Use for completed tasks, success messages, and confirmations. Matches iOS green."
+    },
+    "warning": {
+      "_comment": "Indicates caution, attention needed, or impending deadlines",
+      "default": "#FF9500",
+      "light": "#B36B00",
+      "dark": "#FFB340",
+      "_notes": "Use for upcoming deadlines, warnings, and alerts that require attention but aren't errors. Matches iOS orange."
+    },
+    "error": {
+      "_comment": "Indicates errors, failures, and destructive actions",
+      "default": "#FF3B30",
+      "light": "#C62828",
+      "dark": "#FF453A",
+      "_notes": "Use for error messages, failed actions, and destructive buttons (delete, remove). Matches iOS red."
+    },
+    "info": {
+      "_comment": "Indicates informational messages and neutral feedback",
+      "default": "#5AC8FA",
+      "light": "#0091EA",
+      "dark": "#64D2FF",
+      "_notes": "Use for informational banners, tips, and neutral announcements. Matches iOS cyan."
+    }
+  },
+  
+  "taskPriorities": {
+    "_comment": "Colors specific to task priority levels. These help users quickly identify urgency.",
+    "low": {
+      "default": "#8E8E93",
+      "light": "#636366",
+      "dark": "#AEAEB2",
+      "_notes": "Gray - Low urgency. Subtle and doesn't demand attention."
+    },
+    "medium": {
+      "default": "#007AFF",
+      "light": "#0056CC",
+      "dark": "#409CFF",
+      "_notes": "Blue - Medium urgency. Standard priority. Matches primary color."
+    },
+    "high": {
+      "default": "#FF9500",
+      "light": "#B36B00",
+      "dark": "#FFB340",
+      "_notes": "Orange - High urgency. Indicates importance without being alarming."
+    },
+    "urgent": {
+      "default": "#FF3B30",
+      "light": "#C62828",
+      "dark": "#FF453A",
+      "_notes": "Red - Urgent. Demands immediate attention. Same as semantic error color."
+    }
+  },
+  
+  "listColors": {
+    "_comment": "Color palette for user-created task lists. These colors are chosen to work well together and with the UI.",
+    "available": [
+      "#FF3B30",
+      "#FF9500",
+      "#FFCC00",
+      "#34C759",
+      "#5AC8FA",
+      "#007AFF",
+      "#5856D6",
+      "#AF52DE",
+      "#FF2D55",
+      "#A2845E",
+      "_notes": "Users can choose from these predefined colors when creating lists. This ensures visual harmony and prevents jarring color combinations."
+    ]
+  },
+  
+  "accessibility": {
+    "_comment": "Accessibility considerations for color usage",
+    "minimumContrast": {
+      "largeText": "3.0",
+      "normalText": "4.5",
+      "_notes": "WCAG AA standards. Large text is 18pt+ bold or 24pt+ normal. Always test color combinations against white and black backgrounds."
+    },
+    "colorBlindness": {
+      "strategies": [
+        "Use icons/labels alongside color",
+        "Avoid red/green for critical distinctions",
+        "Test with deuteranopia, protanopia, tritanopia simulators"
+      ],
+      "_notes": "Don't rely on color alone to convey meaning. Task completion uses checkmark + color change, not just green."
+    }
+  },
+  
+  "_implementationTips": {
+    "1": "Create SwiftUI Color extensions for easy access: Color(.brandPrimary), Color(.taskPriorityHigh)",
+    "2": "Store these in Assets.xcassets as color sets with light/dark appearances",
+    "3": "For dynamic colors in code, use Color(UIColor { trait in traitCollection.userInterfaceStyle == .dark ? darkColor : lightColor })",
+    "4": "Consider semantic colors over hard-coded colors: Color(.systemBackground), Color(.secondaryLabel)",
+    "5": "Test colors in both light and dark modes during development"
+  }
+}

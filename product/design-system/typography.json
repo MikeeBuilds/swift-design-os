@@ -1,0 +1,251 @@
+{
+  "version": "1.0",
+  "_comment": "TaskFlow Design System - Typography Tokens",
+  "_description": "This file defines the typography system for TaskFlow. Typography is organized by hierarchy (heading, body, functional) with specific fonts, sizes, weights, and spacing for each level.",
+  "_swiftUsage": "In SwiftUI, use these with .font() modifier. Create a Font extension or ViewModifier for consistent application: .font(.h1), .font(.bodyRegular), etc.",
+  "_accessibility": "All fonts should support Dynamic Type to respect user's preferred text size. Use UIFontMetrics for scaling.",
+  
+  "fontFamily": {
+    "_comment": "Primary font families used throughout TaskFlow",
+    "heading": {
+      "family": "SF Pro Display",
+      "weight": "bold",
+      "_notes": "Used for all headings and titles. SF Pro Display is the system display font, optimized for large sizes."
+    },
+    "body": {
+      "family": "SF Pro Text",
+      "weight": "regular",
+      "_notes": "Used for body text, descriptions, and content. SF Pro Text is optimized for readability at text sizes."
+    },
+    "mono": {
+      "family": "SF Mono",
+      "weight": "regular",
+      "_notes": "Used for code snippets, dates, and technical information. SF Mono is the system monospace font."
+    },
+    "_designRationale": "Using Apple's system fonts (SF Pro) ensures native appearance, automatic dark mode support, and optimal rendering across all Apple platforms without shipping custom fonts."
+  },
+  
+  "headings": {
+    "_comment": "Heading levels for hierarchical information. Used for page titles, section headers, and emphasized text.",
+    "h1": {
+      "name": "Display Heading",
+      "size": 34,
+      "weight": "bold",
+      "lineHeight": 41,
+      "letterSpacing": 0.37,
+      "_usage": "Page titles (e.g., 'My Tasks', 'Settings')",
+      "_notes": "Largest heading. Used once per screen at most. Maps to .largeTitle in SwiftUI."
+    },
+    "h2": {
+      "name": "Section Heading",
+      "size": 28,
+      "weight": "bold",
+      "lineHeight": 34,
+      "letterSpacing": 0.36,
+      "_usage": "Major section headers (e.g., 'Today's Tasks')",
+      "_notes": "Second level heading. Maps to .title in SwiftUI."
+    },
+    "h3": {
+      "name": "Subsection Heading",
+      "size": 22,
+      "weight": "semibold",
+      "lineHeight": 28,
+      "letterSpacing": 0.35,
+      "_usage": "Card titles, list headers (e.g., 'Work Projects')",
+      "_notes": "Third level heading. Maps to .title2 in SwiftUI."
+    },
+    "h4": {
+      "name": "Minor Heading",
+      "size": 20,
+      "weight": "semibold",
+      "lineHeight": 25,
+      "letterSpacing": 0.38,
+      "_usage": "Small headers, emphasized labels",
+      "_notes": "Fourth level heading. Maps to .title3 in SwiftUI."
+    },
+    "h5": {
+      "name": "Caption Heading",
+      "size": 17,
+      "weight": "medium",
+      "lineHeight": 22,
+      "letterSpacing": -0.43,
+      "_usage": "Field labels, section labels",
+      "_notes": "Fifth level heading. Maps to .headline in SwiftUI."
+    }
+  },
+  
+  "body": {
+    "_comment": "Body text for content, descriptions, and readable information.",
+    "large": {
+      "name": "Large Body",
+      "size": 17,
+      "weight": "regular",
+      "lineHeight": 22,
+      "letterSpacing": -0.43,
+      "_usage": "Primary content, descriptions",
+      "_notes": "Default body text size. Maps to .body in SwiftUI."
+    },
+    "regular": {
+      "name": "Regular Body",
+      "size": 15,
+      "weight": "regular",
+      "lineHeight": 20,
+      "letterSpacing": -0.24,
+      "_usage": "Secondary content, details",
+      "_notes": "Slightly smaller body text. Maps to .callout in SwiftUI."
+    },
+    "small": {
+      "name": "Small Body",
+      "size": 13,
+      "weight": "regular",
+      "lineHeight": 18,
+      "letterSpacing": -0.08,
+      "_usage": "Tertiary content, footnotes",
+      "_notes": "Smallest readable body text. Maps to .footnote in SwiftUI."
+    }
+  },
+  
+  "functional": {
+    "_comment": "Functional text for UI elements, controls, and metadata.",
+    "button": {
+      "name": "Button Text",
+      "size": 17,
+      "weight": "semibold",
+      "lineHeight": 22,
+      "letterSpacing": -0.43,
+      "_usage": "Primary and secondary buttons",
+      "_notes": "Button text should be semibold for emphasis. Maps to .body.weight(.semibold) in SwiftUI."
+    },
+    "label": {
+      "name": "Label Text",
+      "size": 13,
+      "weight": "medium",
+      "lineHeight": 18,
+      "letterSpacing": -0.08,
+      "_usage": "Form labels, metadata labels",
+      "_notes": "Small, bold text for labels. Maps to .caption.weight(.medium) in SwiftUI."
+    },
+    "caption": {
+      "name": "Caption Text",
+      "size": 12,
+      "weight": "regular",
+      "lineHeight": 16,
+      "letterSpacing": 0,
+      "_usage": "Timestamps, helper text, disabled text",
+      "_notes": "Smallest text for non-critical information. Maps to .caption2 in SwiftUI."
+    },
+    "date": {
+      "name": "Date Text",
+      "size": 15,
+      "weight": "medium",
+      "lineHeight": 20,
+      "letterSpacing": -0.24,
+      "_usage": "Due dates, timestamps, schedule text",
+      "_notes": "Medium weight for dates to stand out from body text. Can use SF Mono for technical precision."
+    }
+  },
+  
+  "typographyScale": {
+    "_comment": "Scale ratios for consistent sizing across the system",
+    "majorThird": 1.25,
+    "_notes": "Using a major third scale (1.25) creates harmonious sizing between headings. Each heading level is 1.25x larger than the next."
+  },
+  
+  "lineHeight": {
+    "_comment": "Line height ratios for readability",
+    "tight": 1.2,
+    "normal": 1.4,
+    "relaxed": 1.6,
+    "_notes": "Tight for headings, normal for body, relaxed for long-form content."
+  },
+  
+  "letterSpacing": {
+    "_comment": "Letter spacing adjustments for different sizes",
+    "positive": {
+      "largeText": "0.3 to 0.4",
+      "reason": "Slightly more letter spacing improves readability at large sizes"
+    },
+    "negative": {
+      "smallText": "-0.2 to -0.5",
+      "reason": "Tight letter spacing improves readability at small sizes"
+    },
+    "_notes": "System fonts have built-in letter spacing. Adjust only when needed for visual balance."
+  },
+  
+  "fontWeight": {
+    "_comment": "Font weight hierarchy for emphasis",
+    "levels": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "_usage": {
+      "light": "Optional, for subtle text",
+      "regular": "Body text, standard content",
+      "medium": "Emphasized labels, metadata",
+      "semibold": "Buttons, headings, active elements",
+      "bold": "Major headings, page titles"
+    }
+  },
+  
+  "textStyles": {
+    "_comment": "Pre-defined text style combinations for common patterns",
+    "taskTitle": {
+      "size": 17,
+      "weight": "medium",
+      "lineHeight": 22,
+      "_usage": "Primary task title in list items"
+    },
+    "taskDescription": {
+      "size": 15,
+      "weight": "regular",
+      "lineHeight": 20,
+      "_usage": "Task notes and descriptions"
+    },
+    "taskMeta": {
+      "size": 13,
+      "weight": "medium",
+      "lineHeight": 18,
+      "_usage": "Due dates, priority labels"
+    },
+    "listName": {
+      "size": 22,
+      "weight": "semibold",
+      "lineHeight": 28,
+      "_usage": "List and project names"
+    }
+  },
+  
+  "accessibility": {
+    "_comment": "Accessibility considerations for typography",
+    "dynamicType": {
+      "support": true,
+      "_notes": "All text should respect user's Dynamic Type preference. Use UIFontMetrics.scaledValue(for:) for custom sizes."
+    },
+    "minimumSize": {
+      "bodyText": 11,
+      "_notes": "WCAG guidelines recommend 11px minimum for body text. Always test at smallest text size."
+    },
+    "readability": {
+      "targetRatio": "1.4 to 1.6",
+      "_notes": "Optimal line height for readability. Adjust based on font size and line length."
+    }
+  },
+  
+  "_implementationTips": {
+    "1": "Create SwiftUI Font extension: static func h1() -> Font { .system(size: 34, weight: .bold) }",
+    "2": "Use ViewModifier for consistent application: struct BodyText: ViewModifier { func body(content: Content) -> some View { content.font(.body).foregroundColor(.primary) } }",
+    "3": "Support Dynamic Type with scaledFont() extension: func scaledFont(size: CGFloat) -> Font { Font.system(size: UIFontMetrics.default.scaledValue(for: size)) }",
+    "4": "Prefer system fonts (.title, .body, .caption) over custom sizes for automatic Dynamic Type support",
+    "5": "Test typography at different text sizes (Extra Small to Accessible Extra Large) during development"
+  },
+  
+  "_references": {
+    "SFPro": "https://developer.apple.com/design/human-interface-guidelines/typography",
+    "SFProDisplay": "Optimized for headlines and large text, available in 9 weights",
+    "SFProText": "Optimized for body text, available in 9 weights",
+    "SFMono": "Monospace font for code and technical text, available in 6 weights"
+  }
+}

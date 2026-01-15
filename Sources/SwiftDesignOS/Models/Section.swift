@@ -6,35 +6,60 @@
 
 import Foundation
 
-/// Parsed section specification
-struct ParsedSpec {
-    let title: String
-    let overview: String
-    let userFlows: [String]
-    let uiRequirements: [String]
-    let useShell: Bool
+public struct ParsedSpec {
+    public let title: String
+    public let overview: String
+    public let userFlows: [String]
+    public let uiRequirements: [String]
+    public let useShell: Bool
+
+    public init(title: String, overview: String, userFlows: [String], uiRequirements: [String], useShell: Bool) {
+        self.title = title
+        self.overview = overview
+        self.userFlows = userFlows
+        self.uiRequirements = uiRequirements
+        self.useShell = useShell
+    }
 }
 
-/// Screen design information
-struct ScreenDesignInfo {
-    let name: String
-    let path: String
-    let componentName: String
+public struct ScreenDesignInfo {
+    public let name: String
+    public let path: String
+    public let componentName: String
+
+    public init(name: String, path: String, componentName: String) {
+        self.name = name
+        self.path = path
+        self.componentName = componentName
+    }
 }
 
-/// Screenshot information
-struct ScreenshotInfo {
-    let name: String
-    let path: String
-    let url: URL
+public struct ScreenshotInfo {
+    public let name: String
+    public let path: String
+    public let url: URL
+
+    public init(name: String, path: String, url: URL) {
+        self.name = name
+        self.path = path
+        self.url = url
+    }
 }
 
-/// Section data including spec, data, designs, and screenshots
-struct SectionData {
-    let sectionId: String
-    let spec: String?
-    let specParsed: ParsedSpec?
-    let data: [String: Any]?
-    let screenDesigns: [ScreenDesignInfo]
-    let screenshots: [ScreenshotInfo]
+public struct SectionData {
+    public let sectionId: String
+    public let spec: String?
+    public let specParsed: ParsedSpec?
+    public let data: [String: Any]?
+    public let screenDesigns: [ScreenDesignInfo]
+    public let screenshots: [ScreenshotInfo]
+
+    public init(sectionId: String, spec: String?, specParsed: ParsedSpec?, data: [String: Any]?, screenDesigns: [ScreenDesignInfo], screenshots: [ScreenshotInfo]) {
+        self.sectionId = sectionId
+        self.spec = spec
+        self.specParsed = specParsed
+        self.data = data
+        self.screenDesigns = screenDesigns
+        self.screenshots = screenshots
+    }
 }

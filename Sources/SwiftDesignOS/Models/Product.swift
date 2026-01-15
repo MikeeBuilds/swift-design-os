@@ -6,84 +6,142 @@
 
 import Foundation
 
-/// Product overview containing vision, problems, and features
-struct ProductOverview {
-    let name: String
-    let description: String
-    let problems: [Problem]
-    let features: [String]
+public struct ProductOverview {
+    public let name: String
+    public let description: String
+    public let problems: [Problem]
+    public let features: [String]
+
+    public init(name: String, description: String, problems: [Problem], features: [String]) {
+        self.name = name
+        self.description = description
+        self.problems = problems
+        self.features = features
+    }
 }
 
-/// A problem the product solves and how it solves it
-struct Problem {
-    let title: String
-    let solution: String
+public struct Problem {
+    public let title: String
+    public let solution: String
+
+    public init(title: String, solution: String) {
+        self.title = title
+        self.solution = solution
+    }
 }
 
-/// A section in the product roadmap
-struct Section {
-    let id: String
-    let title: String
-    let description: String
-    let order: Int
+public struct Section {
+    public let id: String
+    public let title: String
+    public let description: String
+    public let order: Int
+
+    public init(id: String, title: String, description: String, order: Int) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.order = order
+    }
 }
 
-/// Product roadmap with ordered sections
-struct ProductRoadmap {
-    let sections: [Section]
+public struct ProductRoadmap {
+    public let sections: [Section]
+
+    public init(sections: [Section]) {
+        self.sections = sections
+    }
 }
 
-/// Core entity in the data model
-struct Entity {
-    let name: String
-    let description: String
+public struct Entity {
+    public let name: String
+    public let description: String
+
+    public init(name: String, description: String) {
+        self.name = name
+        self.description = description
+    }
 }
 
-/// Data model with entities and relationships
-struct DataModel {
-    let entities: [Entity]
-    let relationships: [String]
+public struct DataModel {
+    public let entities: [Entity]
+    public let relationships: [String]
+
+    public init(entities: [Entity], relationships: [String]) {
+        self.entities = entities
+        self.relationships = relationships
+    }
 }
 
-/// Color tokens for design system
-struct ColorTokens {
-    let primary: String
-    let secondary: String
-    let neutral: String
+public struct ColorTokens {
+    public let primary: String
+    public let secondary: String
+    public let neutral: String
+
+    public init(primary: String, secondary: String, neutral: String) {
+        self.primary = primary
+        self.secondary = secondary
+        self.neutral = neutral
+    }
 }
 
-/// Typography tokens for design system
-struct TypographyTokens {
-    let heading: String
-    let body: String
-    let mono: String
+public struct TypographyTokens {
+    public let heading: String
+    public let body: String
+    public let mono: String
+
+    public init(heading: String, body: String, mono: String) {
+        self.heading = heading
+        self.body = body
+        self.mono = mono
+    }
 }
 
-/// Design system configuration
-struct DesignSystem {
-    let colors: ColorTokens?
-    let typography: TypographyTokens?
+public struct DesignSystem {
+    public let colors: ColorTokens?
+    public let typography: TypographyTokens?
+
+    public init(colors: ColorTokens?, typography: TypographyTokens?) {
+        self.colors = colors
+        self.typography = typography
+    }
 }
 
-/// Shell specification for application shell
-struct ShellSpec {
-    let raw: String
-    let overview: String
-    let navigationItems: [String]
-    let layoutPattern: String
+public struct ShellSpec {
+    public let raw: String
+    public let overview: String
+    public let navigationItems: [String]
+    public let layoutPattern: String
+
+    public init(raw: String, overview: String, navigationItems: [String], layoutPattern: String) {
+        self.raw = raw
+        self.overview = overview
+        self.navigationItems = navigationItems
+        self.layoutPattern = layoutPattern
+    }
 }
 
-/// Shell information including spec and components
-struct ShellInfo {
-    let spec: ShellSpec?
-    let hasComponents: Bool
+public struct ShellInfo {
+    public let spec: ShellSpec?
+    public let hasComponents: Bool
+
+    public init(spec: ShellSpec?, hasComponents: Bool) {
+        self.spec = spec
+        self.hasComponents = hasComponents
+    }
 }
 
-/// Complete product data
-struct ProductData {
-    let overview: ProductOverview?
-    let roadmap: ProductRoadmap?
-    let dataModel: DataModel?
-    let designSystem: DesignSystem?
-    let shell: ShellInfo?
+public struct ProductData {
+    public let overview: ProductOverview?
+    public let roadmap: ProductRoadmap?
+    public let dataModel: DataModel?
+    public let designSystem: DesignSystem?
+    public let shell: ShellInfo?
+
+    public init(overview: ProductOverview?, roadmap: ProductRoadmap?, dataModel: DataModel?, designSystem: DesignSystem?, shell: ShellInfo?) {
+        self.overview = overview
+        self.roadmap = roadmap
+        self.dataModel = dataModel
+        self.designSystem = designSystem
+        self.shell = shell
+    }
 }
