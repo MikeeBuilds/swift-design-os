@@ -1,5 +1,51 @@
 # Security Policy
 
-Please do not open public issues for potential security problems.
+## Supported Versions
 
-Send potential security problems to brian@buildermethods.com and they will be addressed promptly.
+| Version | Supported          |
+|---------|-------------------|
+| Latest  | :white_check_mark: |
+| < 1.0   | :x:               |
+
+## Reporting a Vulnerability
+
+If you discover a security vulnerability, please report it responsibly:
+
+**DO NOT** open a public issue.
+
+**DO** send an email to: YOUR_EMAIL@example.com
+
+Include the following information in your report:
+
+- Type of vulnerability
+- Steps to reproduce
+- Potential impact
+- Any proof-of-concept code (if available)
+
+## Response Process
+
+Once you report a vulnerability:
+
+1. We will acknowledge receipt within 24 hours
+2. We will investigate and validate the report
+3. We will develop a fix within a reasonable timeframe
+4. We will coordinate release with you
+5. We will publicly disclose the vulnerability after fix is released
+
+## Best Practices
+
+When using Swift DesignOS in production:
+
+1. Keep dependencies updated
+2. Review security advisories regularly
+3. Follow Swift security best practices
+4. Use secure coding practices
+5. Validate all user inputs
+6. Implement proper error handling
+
+## Security Resources
+
+- [Swift Security Blog](https://swift.org/blog/)
+- [Apple Security](https://support.apple.com/security)
+- [OWASP Mobile Security](https://owasp.org/www-project-mobile-security/)
+- [CWE/SANS Top 25](https://cwe.mitre.org/top25/)

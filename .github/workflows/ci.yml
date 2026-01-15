@@ -1,0 +1,103 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_16.0.app/Contents/Developer
+
+jobs:
+  build:
+    name: Build Swift Package
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+
+      - name: Build Swift Package
+        run: |
+          swift build -c release
+          swift build -c debug
+
+  test:
+    name: Run Tests
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        platform: [iOS, macOS, watchOS, tvOS]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+
+      - name: Run Tests (macOS)
+        if: matrix.platform == 'macOS'
+        run: swift test --enable-code-coverage
+
+      - name: Run Tests (iOS)
+        if: matrix.platform == 'iOS'
+        run: swift test -Xswiftc -sdk -Xswiftc `xcrun --sdk iphonesimulator --show-sdk-path`
+
+      - name: Run Tests (watchOS)
+        if: matrix.platform == 'watchOS'
+        run: swift test -Xswiftc -sdk -Xswiftc `xcrun --sdk watchsimulator --show-sdk-path`
+
+      - name: Run Tests (tvOS)
+        if: matrix.platform == 'tvOS'
+        run: swift test -Xswiftc -sdk -Xswiftc `xcrun --sdk appletvsimulator --show-sdk-path`
+
+      - name: Generate Code Coverage
+        if: matrix.platform == 'macOS'
+        run: |
+          xcrun llvm-cov export --format="text" --instr-profile=.build/debug/codecov/default.profdata .build/debug/SwiftDesignOSPackageTests.xctest/Contents/MacOS/SwiftDesignOSPackageTests > coverage.txt
+
+      - name: Upload Coverage
+        if: matrix.platform == 'macOS'
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.txt
+          flags: swift-design-os
+          name: codecov-${{ matrix.platform }}
+
+  lint:
+    name: SwiftLint
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Run SwiftLint
+        run: swiftlint lint --reporter github-actions-logging
+
+  format:
+    name: SwiftFormat Check
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SwiftFormat
+        run: brew install swiftformat
+
+      - name: Check Formatting
+        run: |
+          swiftformat Sources Tests --lint
+          if [ $? -ne 0 ]; then
+            echo "Formatting issues found. Run 'swiftformat Sources Tests' to fix."
+            exit 1
+          fi

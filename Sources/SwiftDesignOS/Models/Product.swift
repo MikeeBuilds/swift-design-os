@@ -3,6 +3,10 @@
 //  Swift DesignOS
 //
 //  Core data models for product definition
+//
+//  SPDX-License-Identifier: MIT
+//  Copyright (c) 2025 CasJam Media LLC (Builder Methods)
+//
 
 import Foundation
 

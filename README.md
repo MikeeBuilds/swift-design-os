@@ -40,6 +40,32 @@ Swift DesignOS supports all Apple platforms:
 
 ## Getting Started
 
+### Via Swift Package Index (Recommended)
+
+Once published to the Swift Package Index, Swift DesignOS can be easily discovered and installed:
+
+**In Xcode:**
+1. Open your Xcode project
+2. Go to **File → Add Package Dependencies...**
+3. Search for "swift-design-os" or "SwiftDesignOS"
+4. Select the package from search results
+5. Choose version rule (e.g., "Up to Next Major Version")
+6. Click "Add Package"
+7. Select targets to add the package to
+8. Click "Add Package"
+
+**Command Line:**
+```bash
+# Add Swift DesignOS dependency
+swift package add dependency: https://github.com/YOUR_ORG/swift-design-os.git
+
+# Resolve dependencies
+swift package resolve
+
+# Build your project
+swift build
+```
+
 ### As a Planning Tool (Mac App)
 
 ```bash
@@ -53,9 +79,9 @@ open App/swift-design-os-app/swift-design-os-app.xcodeproj
 
 The app will launch and guide you through the 7-step planning process.
 
-### As a Library (SPM Package)
+### As a Library (Local SPM Package)
 
-Add Swift DesignOS as a dependency to any of your iOS/macOS/watchOS/tvOS projects:
+Add Swift DesignOS as a local dependency to any of your iOS/macOS/watchOS/tvOS projects:
 
 1. **File → Add Package Dependencies** in Xcode
 2. **Choose Add Local Package** and select the `swift-design-os` directory
@@ -65,6 +91,693 @@ The core library (`SwiftDesignOS`) provides:
 - Data models (`ProductOverview`, `Section`, `Entity`, etc.)
 - Data loaders (`loadProductData()`, `loadSectionData()`)
 - Export generators (when implemented)
+
+---
+
+## Publishing Swift DesignOS to Swift Package Index
+
+### Overview
+
+Swift DesignOS can be published to the Swift Package Index (SPI) to make it discoverable and installable by other developers through Xcode's package manager.
+
+**Swift Package Index** is a free, public search engine for Swift packages that:
+- Requires no authentication or account
+- Indexes packages from public git repositories
+- Appears in Xcode's "Add Package Dependencies" search
+- Provides package metadata, documentation, and version history
+
+This guide covers the complete publishing process.
+
+---
+
+### Prerequisites
+
+Before publishing, ensure you have:
+
+- **Swift 6.0+** installed
+- **Xcode 15.4+** (for Swift 6.0 support)
+- **Public GitHub repository** with the package
+- **Valid Package.swift** in root directory
+- **LICENSE file** in repository root
+- **Semantic version tags** (e.g., `1.0.0`, `0.1.0`)
+- **Git repository accessible** via HTTPS
+
+**Platform Support:**
+Swift DesignOS supports:
+- iOS 17.0+
+- macOS 14.0+
+- watchOS 10.0+
+- tvOS 17.0+
+
+---
+
+### Step 1: Prepare Package.swift
+
+Ensure your Package.swift is properly configured with metadata:
+
+```swift
+// swift-tools-version: 6.0
+import PackageDescription
+
+let package = Package(
+    name: "SwiftDesignOS",
+    platforms: [
+        .iOS(.v17),
+        .macOS(.v14),
+        .watchOS(.v10),
+        .tvOS(.v17)
+    ],
+    products: [
+        .library(
+            name: "SwiftDesignOS",
+            targets: ["SwiftDesignOS"]
+        )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-markdown.git", from: "0.3.0")
+    ],
+    targets: [
+        .target(
+            name: "SwiftDesignOS",
+            dependencies: [
+                .product(name: "Markdown", package: "swift-markdown")
+            ]
+        )
+    ]
+)
+```
+
+**Key Requirements:**
+- `swift-tools-version: 6.0` at the top
+- All dependencies specified with valid URLs
+- Library product defined
+- Platforms match your supported versions
+
+**Validate Package.swift:**
+```bash
+# Verify Package.swift is valid
+swift package dump-package
+
+# This should output valid JSON with package structure
+```
+
+---
+
+### Step 2: Create Semantic Version Tag
+
+Create and push a git tag for your release:
+
+```bash
+# Tag your release (follow SemVer 2.0: MAJOR.MINOR.PATCH)
+git tag 1.0.0
+
+# Push tag to remote
+git push origin 1.0.0
+```
+
+**Important Rules:**
+- Tag format: `1.0.0`, `0.1.5` (no "v" prefix)
+- Tags must follow semantic versioning
+- Each tag creates a new indexed version
+- Tags should point to stable commits
+
+**Verify Tags:**
+```bash
+# List all local tags
+git tag -l
+
+# Verify remote tags exist
+git ls-remote --tags origin
+```
+
+---
+
+### Step 3: Verify Package Builds
+
+Test that your package builds successfully:
+
+```bash
+# Build the package
+swift build
+
+# Run tests
+swift test
+
+# Verify package resolves
+swift package resolve
+```
+
+Ensure:
+- No build errors
+- All tests pass
+- Dependencies are accessible
+- Package.swift is valid
+
+---
+
+### Step 4: Register on Swift Package Index
+
+1. Visit [swiftpackageindex.com/add-a-package](https://swiftpackageindex.com/add-a-package)
+2. Enter your repository URL: `https://github.com/YOUR_ORG/swift-design-os.git`
+3. Click "Add Package"
+4. **No account or authentication required** - it's completely open and free
+
+The Swift Package Index will:
+- Validate your repository accessibility
+- Parse Package.swift
+- Identify semantic version tags
+- Index your package automatically
+
+---
+
+### Step 5: Upload Package Files
+
+Your package files are already in your git repository! No separate upload needed:
+
+- Source code is in your GitHub repository
+- Package.swift defines the package structure
+- Tags define version releases
+- SPI indexes directly from your git repo
+
+**Just ensure:**
+- Repository is public
+- Tags are pushed to remote
+- Package.swift is valid
+- No access restrictions on git
+
+---
+
+### Step 6: Publish and Verify
+
+Wait for Swift Package Index to process your package (typically 1-5 minutes):
+
+1. **Check Package Page:**
+   - Visit: `https://swiftpackageindex.com/packages/swiftdesignos`
+   - Verify package name, description, and version appear
+
+2. **Verify Search Results:**
+   - Go to [swiftpackageindex.com](https://swiftpackageindex.com)
+   - Search for "swift-design-os"
+   - Confirm your package appears
+
+3. **Test in Xcode:**
+   - Open any Xcode project
+   - File → Add Package Dependencies...
+   - Search for "swift-design-os"
+   - Package should appear in search results!
+
+---
+
+### Step 7: Test Installation
+
+Verify users can install the package:
+
+**Via Xcode:**
+```bash
+# Create test project
+xcrun swift package init --type executable
+
+# Open in Xcode
+xed .
+
+# File → Add Package Dependencies...
+# Search for "swift-design-os"
+# Add package
+# Build to verify
+```
+
+**Via Command Line:**
+```bash
+# Add dependency
+swift package add dependency: https://github.com/YOUR_ORG/swift-design-os.git
+
+# Resolve
+swift package resolve
+
+# Build
+swift build
+```
+
+---
+
+### Troubleshooting Publishing
+
+**Problem: Package not validated by SPI**
+```bash
+# Check Package.swift validity
+swift package dump-package
+
+# Verify tag exists
+git ls-remote --tags origin
+
+# Check if repo is public
+curl -I https://github.com/YOUR_ORG/swift-design-os.git
+```
+
+**Problem: Package not appearing in search results**
+- Wait 24-48 hours for SPI re-indexing
+- Verify tags follow SemVer format (no "v" prefix)
+- Ensure repository is public
+- Check SPI status page for indexing errors
+
+**Problem: Missing license in SPI display**
+- Add LICENSE file to repository root
+- Common licenses: MIT, Apache-2.0, BSD-3-Clause
+
+**Problem: Build fails after adding package**
+- Verify platform versions match
+- Check Swift tools version
+- Ensure all dependencies are accessible
+- Clean build folder and retry
+
+---
+
+## Using Swift DesignOS in Xcode
+
+### Finding Package in Search Results
+
+Once published to the Swift Package Index:
+
+1. Open your Xcode project
+2. Go to **File → Add Package Dependencies...**
+3. In the search bar, type: `swift-design-os`
+4. Wait for search results to load
+5. **Swift DesignOS** should appear with:
+   - Package name: SwiftDesignOS
+   - Description: The missing design process between your product idea and your Swift/SwiftUI codebase.
+   - Repository: GitHub link
+
+![Xcode Package Search](docs/images/xcode-package-search.png)
+
+### Adding as Local Package
+
+If you want to use Swift DesignOS from your local clone:
+
+**Method 1: Drag and Drop**
+1. In Xcode, locate your project navigator
+2. Drag the `swift-design-os` folder into your project
+3. Select "Add to: [Your Project Name]"
+4. In the dialog, choose:
+   - **Added folders**: Create groups
+   - **Add to targets**: Select targets that should use the library
+5. Click "Finish"
+
+**Method 2: Add Local Package Menu**
+1. Go to **File → Add Package Dependencies...**
+2. Click "Add Local Package..." button (usually bottom or side panel)
+3. Navigate to and select the `swift-design-os` directory
+4. Click "Add Package"
+5. Xcode will parse Package.swift and show available products
+
+### Import Statements
+
+Once added, import in your Swift files:
+
+```swift
+import SwiftUI
+import SwiftDesignOS  // Import the package
+
+struct ContentView: View {
+    var body: some View {
+        // Use Swift DesignOS components
+        Card {
+            Text("Hello from Swift DesignOS!")
+        }
+    }
+}
+```
+
+### Xcode Integration Workflow
+
+```
+1. Open Project
+   ↓
+2. File → Add Package Dependencies...
+   ↓
+3. Search "swift-design-os" (or Add Local Package)
+   ↓
+4. Select package and version
+   ↓
+5. Choose targets to add to
+   ↓
+6. Import SwiftDesignOS in code
+   ↓
+7. Use components and APIs
+```
+
+---
+
+## Using Swift DesignOS via SPM (Command Line)
+
+### Adding Dependencies
+
+**Important:** Swift Package Manager doesn't have a `swift package add` command. Instead, you manually edit your `Package.swift` file to add dependencies.
+
+**Edit Package.swift directly:**
+
+```swift
+// swift-tools-version: 6.0
+import PackageDescription
+
+let package = Package(
+    name: "MyApp",
+    dependencies: [
+        // Remote package - from version (recommended)
+        .package(url: "https://github.com/YOUR_ORG/swift-design-os.git", from: "1.0.0"),
+        
+        // Remote package - exact version
+        .package(url: "https://github.com/YOUR_ORG/swift-design-os.git", exact: "1.2.3"),
+        
+        // Remote package - version range
+        .package(url: "https://github.com/YOUR_ORG/swift-design-os.git", "1.0.0"..<"2.0.0"),
+        
+        // Local package
+        .package(path: "../swift-design-os"),
+    ],
+    targets: [
+        .executableTarget(
+            name: "MyApp",
+            dependencies: [
+                .product(name: "SwiftDesignOS", package: "SwiftDesignOS")
+            ]
+        )
+    ]
+)
+```
+
+**Dependency Version Options:**
+- `from: "1.0.0"` → Allows 1.0.0 to <2.0.0 (recommended)
+- `exact: "1.0.0"` → Only version 1.0.0
+- `"1.0.0"..<"2.0.0"` → Custom version range
+- `branch: "main"` → Always use main branch
+- `revision: "abc123"` → Specific commit (reproducible)
+- `.package(path: "../local")` → Local package path
+
+### Resolving Dependencies
+
+After editing `Package.swift`, resolve your dependencies:
+
+```bash
+# Download and resolve all dependencies
+swift package resolve
+
+# Force using versions from Package.resolved
+swift package resolve --force-resolved-versions
+
+# Skip checking remote for updates
+swift package resolve --skip-update
+```
+
+This will:
+- Download package sources to `~/Library/org.swift.swiftpm/cache`
+- Build dependency graph
+- Resolve version constraints
+- Create `Package.resolved` file
+
+### Building with Dependencies
+
+Build your project with all dependencies:
+
+```bash
+# Basic build
+swift build
+
+# Build with specific configuration
+swift build -c release
+
+# Build specific target
+swift build --target MyApp
+
+# Build with verbose output
+swift build -v
+
+# Clean and rebuild
+swift package clean && swift build
+```
+
+### Full SPM Workflow Example
+
+```bash
+# 1. Create new Swift project
+swift package init --type executable --name MyApp
+
+# 2. Edit Package.swift to add Swift DesignOS dependency
+# Open Package.swift and add:
+# .package(url: "https://github.com/YOUR_ORG/swift-design-os.git", from: "1.0.0")
+
+# 3. Resolve dependencies
+swift package resolve
+
+# 4. Build project
+swift build
+
+# 5. Run application
+swift run
+```
+
+### Adding Target Dependencies
+
+For multiple targets, add dependencies per target:
+
+**Or edit Package.swift manually:**
+```swift
+targets: [
+    .executableTarget(
+        name: "MyApp",
+        dependencies: [
+            .product(name: "SwiftDesignOS", package: "SwiftDesignOS")
+        ]
+    ),
+    .testTarget(
+        name: "MyAppTests",
+        dependencies: ["MyApp", "SwiftDesignOS"]
+    )
+]
+```
+
+### Managing Dependencies
+
+```bash
+# Update all dependencies to latest eligible versions
+swift package update
+
+# Update specific dependency
+swift package update SwiftDesignOS
+
+# Reset Package.resolved
+rm Package.resolved
+swift package resolve
+
+# Reset package state (for troubleshooting)
+swift package reset
+
+# Clean build artifacts
+swift package clean
+
+# Show dependency tree
+swift package show-dependencies
+```
+
+### Useful SPM Commands
+
+```bash
+# Show available schemes
+swift package describe --type json
+
+# Dump package manifest as JSON
+swift package dump-package
+
+# List all targets
+swift package dump-package | jq '.targets[].name'
+
+# Show dependency graph
+swift package dump-package | jq '.dependencies'
+```
+
+---
+
+## Verification Checklist
+
+After publishing Swift DesignOS, verify everything works:
+
+### 1. Swift Package Index Verification
+
+- [ ] Package appears at: `https://swiftpackageindex.com/packages/swiftdesignos`
+- [ ] Package name and description are correct
+- [ ] All version tags are indexed (check Versions tab)
+- [ ] License is detected and displayed
+- [ ] Platform compatibility is shown (iOS, macOS, watchOS, tvOS)
+- [ ] Repository URL links correctly
+- [ ] Package appears in search results for "swift-design-os"
+
+### 2. Xcode Installation Test
+
+- [ ] Open a new Xcode project
+- [ ] Go to File → Add Package Dependencies...
+- [ ] Search for "swift-design-os"
+- [ ] Package appears in search results
+- [ ] Can select package and choose version
+- [ ] Package successfully downloads
+- [ ] Package appears in project navigator under "Package Dependencies"
+- [ ] `import SwiftDesignOS` statement works without errors
+- [ ] Build succeeds with no errors
+
+### 3. Platform Compatibility Testing
+
+Test on each platform:
+
+**iOS:**
+- [ ] Create iOS app project
+- [ ] Add Swift DesignOS via SPM
+- [ ] Build and run on iOS Simulator (iPhone)
+- [ ] Build and run on iPad Simulator
+- [ ] Verify minimum iOS version (17.0+) works
+
+**macOS:**
+- [ ] Create macOS app project
+- [ ] Add Swift DesignOS via SPM
+- [ ] Build and run on Mac (Intel or Apple Silicon)
+- [ ] Verify minimum macOS version (14.0+) works
+
+**watchOS:**
+- [ ] Create watchOS app project
+- [ ] Add Swift DesignOS via SPM
+- [ ] Build and run on Apple Watch Simulator
+- [ ] Verify minimum watchOS version (10.0+) works
+
+**tvOS:**
+- [ ] Create tvOS app project
+- [ ] Add Swift DesignOS via SPM
+- [ ] Build and run on Apple TV Simulator
+- [ ] Verify minimum tvOS version (17.0+) works
+
+### 4. Command Line Testing
+
+- [ ] Create new Swift package: `swift package init`
+- [ ] Add dependency: `swift package add dependency: https://github.com/YOUR_ORG/swift-design-os.git`
+- [ ] Resolve dependencies: `swift package resolve`
+- [ ] Build successfully: `swift build`
+- [ ] No build errors or warnings
+
+### 5. Component Testing
+
+- [ ] Can import Swift DesignOS components
+- [ ] Card component works
+- [ ] Button (SDButton) component works
+- [ ] Badge component works
+- [ ] TextField (SDTextField) component works
+- [ ] All other components are accessible
+
+### 6. Documentation Verification
+
+- [ ] README is up to date with latest installation instructions
+- [ ] All examples in Examples/ build successfully
+- [ ] Documentation is clear and accurate
+- [ ] Links in README are correct
+
+### 7. Release Notes
+
+- [ ] CHANGELOG.md is updated with release notes
+- [ ] GitHub release created with changelog
+- [ ] Breaking changes (if any) are documented
+- [ ] Migration guide provided for major versions
+
+---
+
+## Example Projects
+
+Swift DesignOS includes example projects demonstrating real-world usage:
+
+### TaskFlowExample
+
+**Location:** `Examples/TaskFlowExample/`
+
+**Platform:** iOS 17.0+
+
+A complete task management application showcasing:
+
+- Swift DesignOS components (SDButton, Card, Badge, SDTextField)
+- @Observable and @ObservedObject for state management
+- TabView and NavigationStack for app structure
+- SwiftUI Lists and Forms
+- Sheet modals and data binding
+
+**Key Features:**
+- Task list with filtering
+- Project management
+- Calendar integration
+- Settings configuration
+
+**Run Example:**
+```bash
+cd Examples/TaskFlowExample
+xed .
+# Press Cmd + R to build and run
+```
+
+**Documentation:** See `Examples/TaskFlowExample/README.md` for detailed setup and usage.
+
+### CounterExample
+
+**Location:** `Examples/CounterExample/`
+
+**Platform:** iOS 17.0+
+
+A simple counter app demonstrating:
+- Basic component usage
+- State management with @State
+- Reactive UI updates
+
+### WatchFaceExample
+
+**Location:** `Examples/WatchFaceExample/`
+
+**Platform:** watchOS 10.0+
+
+An Apple Watch face example showcasing:
+- SwiftUI for watchOS
+- Compact layouts
+- Swift DesignOS components on small screens
+
+**Building Examples:**
+
+Each example is a standalone Swift package:
+
+```bash
+# Navigate to example directory
+cd Examples/TaskFlowExample
+
+# Open in Xcode
+xed .
+
+# Or build from command line
+swift run
+```
+
+---
+
+## GitHub Repository
+
+The complete source code, documentation, and examples are available on GitHub:
+
+**Repository:** https://github.com/YOUR_ORG/swift-design-os
+
+**Key Directories:**
+- `Sources/SwiftDesignOS/` - Core library implementation
+- `App/swift-design-os-app/` - Mac app for planning
+- `Examples/` - Example projects (TaskFlow, Counter, WatchFace)
+- `.claude/commands/design-os/` - AI workflow commands
+- `product/` - Portable design definitions
+
+**Issues & Support:**
+- Report bugs: [GitHub Issues](https://github.com/YOUR_ORG/swift-design-os/issues)
+- Feature requests: [GitHub Discussions](https://github.com/YOUR_ORG/swift-design-os/discussions)
+- Contributing: See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+**Releases:**
+- All releases: [GitHub Releases](https://github.com/YOUR_ORG/swift-design-os/releases)
+- Latest release: Check main README badge
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 

@@ -4,6 +4,9 @@
 //
 //  Public API for the Swift DesignOS library
 //
+//  SPDX-License-Identifier: MIT
+//  Copyright (c) 2025 CasJam Media LLC (Builder Methods)
+//
 
 import Foundation
 

@@ -4,6 +4,9 @@
 //
 //  Loader for product overview and roadmap markdown files
 //
+//  SPDX-License-Identifier: MIT
+//  Copyright (c) 2025 CasJam Media LLC (Builder Methods)
+//
 
 import Foundation
 

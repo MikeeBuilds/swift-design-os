@@ -1,3 +1,13 @@
+//
+//  AppLayout.swift
+//  Swift DesignOS
+//
+//  Reusable app layout component with header, navigation, and footer
+//
+//  SPDX-License-Identifier: MIT
+//  Copyright (c) 2025 CasJam Media LLC (Builder Methods)
+//
+
 import SwiftUI
 
 public struct AppLayout<Content: View>: View {

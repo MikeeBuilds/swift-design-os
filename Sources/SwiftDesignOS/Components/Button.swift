@@ -1,3 +1,13 @@
+//
+//  Button.swift
+//  Swift DesignOS
+//
+//  Reusable button component with multiple variants
+//
+//  SPDX-License-Identifier: MIT
+//  Copyright (c) 2025 CasJam Media LLC (Builder Methods)
+//
+
 import SwiftUI
 
 public enum ButtonVariant {

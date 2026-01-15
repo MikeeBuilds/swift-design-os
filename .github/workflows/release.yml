@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    name: Create GitHub Release
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract Version
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Build Release Archive
+        run: |
+          swift build -c release
+          swift test --enable-code-coverage
+
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          echo "## What's Changed" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo "See commit history for detailed changes: https://github.com/${{ github.repository }}/commits/v${{ steps.version.outputs.version }}" >> CHANGELOG.md
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Swift DesignOS v${{ steps.version.outputs.version }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+
+  publish-spm:
+    name: Publish to SPM (Manual)
+    runs-on: macos-latest
+    needs: create-release
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Package.swift
+        run: swift package validate
+
+      - name: Create PR for registry
+        run: |
+          echo "To publish to Swift Package Index:"
+          echo "1. Fork https://github.com/swift-package-index/swift-package-index-server"
+          echo "2. Add your package to packages.yml"
+          echo "3. Submit PR"
+          echo ""
+          echo "Package URL: https://github.com/${{ github.repository }}"
